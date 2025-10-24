@@ -2,6 +2,33 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
+class ivpSolver():
+    def __init__(self, a,b,c):
+        self.A = a
+        self.B = b
+        self.C = c
+        
+    def deg(self, t, x):
+        x = np.array([x]).T
+        dx = self.a @ x + self.b @ self.control(t)
+        return np.ndarray.tolist(dx.T[0])    
+
+    def plot(self, contr, endt, title, labels):
+        self.control = contr
+        plt.figure()
+        plt.title(title)
+
+        for i in range(len(self.A)):
+            self.a = self.A[i]
+            self.b = self.B[i]
+            self.c = self.C[i]
+            res = solve_ivp(self.deg, [0,endt], [0,0], rtol=1e-10, atol=1e-10)
+            y = self.c @ np.array(res.y)
+            y = np.ndarray.tolist(y[0].T)
+            plt.plot(res.t, y, label=labels[i])
+        plt.legend()
+
+
 m=1
 k=1
 b = [0, 0.5, 2]
@@ -12,42 +39,14 @@ A3 = np.array([[0,1],[-k/m,-b[2]/m]])
 B = np.array([[0],[1/m]])
 C = np.array([[1,0]])
 
-def control(t):
-    #return np.array([[1]])
+def step(t):
+    return np.array([[1]])
+
+def sin2t(t):
     return np.array([[np.sin(2*t)]])
 
-def deg1(t,x):
-    x = np.array([x]).T
-    dx = A1@x + B@control(t)
-    return np.ndarray.tolist(dx.T[0])
+m = ivpSolver([A1,A2,A3], [B,B,B], [C,C,C])
+m.plot(step, 10, "Odpowiedź czasowa na skok jednostkowy przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
+m.plot(sin2t, 10, "Odpowiedź czasowa na sin(2t) przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
 
-def deg2(t,x):
-    x = np.array([x]).T
-    dx = A2@x + B@control(t)
-    return np.ndarray.tolist(dx.T[0])
-
-def deg3(t,x):
-    x = np.array([x]).T
-    dx = A3@x + B@control(t)
-    return np.ndarray.tolist(dx.T[0])
-
-res1 = solve_ivp(deg1, [0,10], [0,0], rtol=1e-10)
-res2 = solve_ivp(deg2, [0,10], [0,0], rtol=1e-10)
-res3 = solve_ivp(deg3, [0,10], [0,0], rtol=1e-10)
-
-y1 = C@np.array(res1.y)
-y1 = np.ndarray.tolist(y1[0].T)
-
-y2 = C@np.array(res2.y)
-y2 = np.ndarray.tolist(y2[0].T)
-
-y3 = C@np.array(res3.y)
-y3 = np.ndarray.tolist(y3[0].T)
-
-plt.figure()
-plt.title("Odpowiedź czasowa na skok jednostkowy przy różnych wartościach tłumienia")
-plt.plot(res1.t, y1, label="b = 0")
-plt.plot(res2.t, y2, label="b = 0.5")
-plt.plot(res3.t, y3, label="b = 2")
-plt.legend()
 plt.show()
