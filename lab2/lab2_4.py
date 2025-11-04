@@ -35,6 +35,6 @@ def control2(t):
 
 m = ivpSolver(R,L,C)
 m.plot(control1, "Odpowiedź czasowa oraz przebiegi stanu dla u = 2*1(t)", ["y","x1","x2"])
-m.plot(control1, "Odpowiedź czasowa oraz przebiegi stanu dla u = -2*1(t)", ["y","x1","x2"])
+m.plot(control2, "Odpowiedź czasowa oraz przebiegi stanu dla u = -2*1(t)", ["y","x1","x2"])
 
 plt.show()

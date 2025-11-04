@@ -16,6 +16,7 @@ class ivpSolver():
     def plot(self, contr, endt, title, labels):
         self.control = contr
         plt.figure()
+        plt.grid()
         plt.title(title)
 
         for i in range(len(self.A)):
@@ -27,6 +28,7 @@ class ivpSolver():
             y = np.ndarray.tolist(y[0].T)
             plt.plot(res.t, y, label=labels[i])
         plt.legend()
+        plt.savefig(f"{title}.pdf", dpi=300, bbox_inches='tight')
 
 
 m=1
@@ -46,7 +48,7 @@ def sin2t(t):
     return np.array([[np.sin(2*t)]])
 
 m = ivpSolver([A1,A2,A3], [B,B,B], [C,C,C])
-m.plot(step, 10, "Odpowiedź czasowa na skok jednostkowy przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
-m.plot(sin2t, 10, "Odpowiedź czasowa na sin(2t) przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
+m.plot(step, 20, "Odpowiedź czasowa na u=1(t) przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
+m.plot(sin2t, 20, "Odpowiedź czasowa na u=sin(2t) przy różnych wartościach tłumienia", ["b = 0","b = 0.5","b = 2"])
 
 plt.show()

@@ -46,9 +46,9 @@ m1 = ivpSolver(m,l,J,b[0])
 m2 = ivpSolver(m,l,J,b[1])
 m3 = ivpSolver(m,l,J,b[2])
 
-m1.plot(control,np.pi/2, 20, "Odpowiedź czasowa dla b=0, u=0", ["x","y"])
-m2.plot(control,np.pi/2, 20, "Odpowiedź czasowa dla b=0.1, u=0", ["x","y"])
-m3.plot(control,np.pi/2, 20, "Odpowiedź czasowa dla b=0.5, u=0", ["x","y"])
+m1.plot(control,np.pi/2, 60, "Odpowiedź czasowa dla b=0, u=0", ["x","y"])
+m2.plot(control,np.pi/2, 60, "Odpowiedź czasowa dla b=0.1, u=0", ["x","y"])
+m3.plot(control,np.pi/2, 60, "Odpowiedź czasowa dla b=0.5, u=0", ["x","y"])
 
 m2.plot(control1, 0, 60, "Odpowiedź czasowa dla b=0.1, u=0.1sin(2*pi*2t)", ["x","y"])
 m2.plot(control2, 0, 60, "Odpowiedź czasowa dla b=0.1, u=0.1sin(2*pi*0.65t)", ["x","y"])
