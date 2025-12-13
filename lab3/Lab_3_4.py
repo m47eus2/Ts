@@ -6,19 +6,14 @@ b = 0.5
 k = 1
 m = 1
 
-A = np.array([[0, 1],
-              [-k/m, -b/m]])
-
-B = np.array([[0],
-              [1/m]])
-
+A = np.array([[0, 1],[-k/m, -b/m]])
+B = np.array([[0],[1/m]])
 C = np.array([[1, 0]])
 
 G = np.array([[C],[C@A]])
 print(G)
 
 w = 1;
-
 l1 = 2*w - b/m
 l2 = w*w - 2*w*b/m + (b*b)/(m*m) - k/m
 

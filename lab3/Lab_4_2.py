@@ -6,21 +6,9 @@ b = 0.5
 k = 1
 m = 1
 
-A = np.array([[0, 1],
-              [-k/m, -b/m]])
-
-B = np.array([[0],
-              [1/m]])
-
+A = np.array([[0, 1],[-k/m, -b/m]])
+B = np.array([[0],[1/m]])
 C = np.array([[1, 0]])
-
-G = np.array([[C],[C@A]])
-
-w = 10;
-l1 = 2*w - b/m
-l2 = w*w - 2*w*b/m + (b*b)/(m*m) - k/m
-
-L = np.array([[l1], [l2]])
 
 def u(t):
     return np.array([[np.sin(np.pi*t)]])
@@ -34,9 +22,7 @@ def deg1(t, q):
     
     y = C@x 
        
-    #dx = A @ x + B @ u(t)
     dx = A @ x + B @ (u(t) + ud(t))
-    #dxe = A @ xe + B @ u(t) + L @ (y + yd(t) - C @ xe)
     dxe = A @ xe + B @ u(t) + L @ (y - C @ xe)
     
     return np.ndarray.tolist(np.hstack((dx.T[0], dxe.T[0])))
