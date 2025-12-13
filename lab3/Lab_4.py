@@ -26,6 +26,9 @@ B = np.array([[0],
 
 C = np.array([[1, 0]])
 
+G = np.array([[C],[C@A]])
+#print(G)
+
 w = 10;
 
 l1 = 2*w - b/m
@@ -37,22 +40,30 @@ L = np.array([[l1], [l2]])
 def u(t):
     return np.array([[np.sin(np.pi*t)]]) #return as an array with single element
 
+def yd(t):
+    return np.array([[np.sin(4*np.pi*t)**2]])
+
+def ud(t):
+    return np.array([[10*np.sin(4*np.pi*t)**2]])
+
 #define dynamic system.
 def deg1(t, q):
     x = np.array([q]).T[0:2];
     xe = np.array([q]).T[2:4];
     
-    y = C@x
+    y = C@x 
        
-    dx = A @ x + B @ u(t); #calculate state equation
-    dxe = A @ xe + B @ u(t) + L @ (y - C @ xe)
+    dx = A @ x + B @ u(t)
+    #dx = A @ x + B @ (u(t) + ud(t))
+    dxe = A @ xe + B @ u(t) + L @ (y + yd(t) - C @ xe)
+    #dxe = A @ xe + B @ u(t) + L @ (y - C @ xe)
 
     #note: matrix multiplication is done using @ operator
     
     return np.ndarray.tolist(np.hstack((dx.T[0], dxe.T[0])))
 
 #simulate the dynamic system, pass a system deg1, time of simulation and initial conditions
-res = solve_ivp(deg1, [0,10], [2,0,0,0], rtol=1e-8) #arguments rtol and atol sets calculation tolerance
+res = solve_ivp(deg1, [0,10], [2,0,0,0], rtol=1e-10, atol=1e-10) #arguments rtol and atol sets calculation tolerance
 
 
 #plot results
