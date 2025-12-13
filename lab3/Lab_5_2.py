@@ -33,7 +33,6 @@ x1 = res.y[0]
 x1d = np.zeros_like(x1)
 for k in range(len(x1)):
     x1d[k] = x1[k] + yd(k*Tp)
-    pass
 
 x2Est = np.zeros_like(x1)
 for k in range(1, len(x1)):
